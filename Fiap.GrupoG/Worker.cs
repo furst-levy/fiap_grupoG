@@ -13,16 +13,19 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
+using Amazon.Runtime;
 
 namespace Fiap.GrupoG
 {
     public class Worker : BackgroundService
     {
         private readonly ILogger<Worker> _logger;
+        private AWSCredentials _awsCredentials;
 
-        public Worker(ILogger<Worker> logger)
+        public Worker(ILogger<Worker> logger, AWSCredentials awsCredentials)
         {
             _logger = logger;
+            _awsCredentials = awsCredentials;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -85,7 +88,7 @@ namespace Fiap.GrupoG
                             var detectSentiment = await DetectSentimentAsync(item.Text);
 
                             using var connection = new MySqlConnection(connectionString);
-                            var tweetId = await connection.InsertAsync(item.ConverterParaTabela(1));
+                            var tweetId = await connection.InsertAsync(item.ConverterParaTabela(user.Id));
 
                             foreach (var detectEntity in detectEntities.Entities)
                             {
@@ -133,7 +136,7 @@ namespace Fiap.GrupoG
 
         private async Task<DetectEntitiesResponse> DetectEntitiesAsync(string texto)
         {
-            var comprehendClient = new AmazonComprehendClient(Amazon.RegionEndpoint.USWest2);
+            var comprehendClient = new AmazonComprehendClient(_awsCredentials, Amazon.RegionEndpoint.USWest2);
 
             Console.WriteLine("Calling DetectEntities\n");
             var detectEntitiesRequest = new DetectEntitiesRequest
@@ -151,7 +154,7 @@ namespace Fiap.GrupoG
 
         private async Task<DetectKeyPhrasesResponse> DetectKeyPhrasesAsync(string texto)
         {
-            var comprehendClient = new AmazonComprehendClient(Amazon.RegionEndpoint.USWest2);
+            var comprehendClient = new AmazonComprehendClient(_awsCredentials, Amazon.RegionEndpoint.USWest2);
 
             Console.WriteLine("Calling DetectKeyPhrasesAsync\n");
             var detectKeyPhrasesRequest = new DetectKeyPhrasesRequest
@@ -168,7 +171,7 @@ namespace Fiap.GrupoG
 
         private async Task<DetectSentimentResponse> DetectSentimentAsync(string texto)
         {
-            var comprehendClient = new AmazonComprehendClient(Amazon.RegionEndpoint.USWest2);
+            var comprehendClient = new AmazonComprehendClient(_awsCredentials, Amazon.RegionEndpoint.USWest2);
 
             Console.WriteLine("Calling DetectSentimentAsync\n");
             var dDetectSentimentRequest = new DetectSentimentRequest
