@@ -1,11 +1,12 @@
 ﻿using Fiap.GrupoG.Mongo.Entities;
+using Fiap.GrupoG.Mongo.Interfaces;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 using System.Threading.Tasks;
 
-namespace Fiap.GrupoG.Mongo.Service
+namespace Fiap.GrupoG.Mongo.Services
 {
-    public class TweetRepository
+    public class TweetRepository : ITweetRepository
     {
         public IMongoCollection<TweetEnriry> TweetCollection { get; set; }
 

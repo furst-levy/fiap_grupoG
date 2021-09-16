@@ -1,11 +1,13 @@
 ﻿using Fiap.GrupoG.Mongo.Entities;
+using Fiap.GrupoG.Mongo.Interfaces;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Fiap.GrupoG.Mongo.Service
+namespace Fiap.GrupoG.Mongo.Services
 {
-    public class UserRepository
+    public class UserRepository : IUserRepository
     {
         public IMongoCollection<UserEntity> UserCollection { get; set; }
 
@@ -17,7 +19,12 @@ namespace Fiap.GrupoG.Mongo.Service
                 database.GetCollection<UserEntity>(configurationRoot.GetSection("UserCollectionName").Value);
         }
 
-        public async Task SaveTweetAsync(UserEntity userEntity)
+        public async Task<IEnumerable<UserEntity>> ListUsersAsync()
+        {
+            return await UserCollection.AsQueryable().ToListAsync();
+        }
+
+        public async Task SaveUserAsync(UserEntity userEntity)
         {
             await UserCollection.InsertOneAsync(userEntity);
         }

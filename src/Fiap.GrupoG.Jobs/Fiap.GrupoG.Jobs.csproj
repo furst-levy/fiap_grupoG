@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>dotnet-Fiap.GrupoG.Jobs-08DAED3D-573A-4CD1-A2FA-8A4A18A1C148</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.Comprehend" Version="3.7.1.29" />
+    <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.7.0.1" />
+    <PackageReference Include="AWSSDKCPP-Comprehend" Version="1.6.20171127.25" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.18" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="3.1.18" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fiap.GrupoG.Mongo\Fiap.GrupoG.Mongo.csproj" />
+  </ItemGroup>
+</Project>

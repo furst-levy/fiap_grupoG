@@ -1,6 +1,5 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using System;
 
 namespace Fiap.GrupoG.Mongo.Entities
 {
@@ -8,8 +7,8 @@ namespace Fiap.GrupoG.Mongo.Entities
     public class UserEntity
     {
         [BsonId] [BsonElement("_id")] public ObjectId Id { get; set; }
-        [BsonElement("userId")] public Guid UserId { get; set; }
-        [BsonElement("name")] public Guid Name { get; set; }
-        [BsonElement("userName")] public Guid UserName { get; set; }
+        [BsonElement("userId")] public long UserId { get; set; }
+        [BsonElement("name")] public string Name { get; set; }
+        [BsonElement("userName")] public string UserName { get; set; }
     }
 }

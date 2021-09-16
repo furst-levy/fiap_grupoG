@@ -13,9 +13,9 @@ namespace Fiap.GrupoG.Mongo.Entities
 
         public class UserEntity
         {
-            [BsonElement("userId")] public Guid UserId { get; set; }
-            [BsonElement("name")] public Guid Name { get; set; }
-            [BsonElement("userName")] public Guid UserName { get; set; }
+            [BsonElement("userId")] public long UserId { get; set; }
+            [BsonElement("name")] public string Name { get; set; }
+            [BsonElement("userName")] public string UserName { get; set; }
         }
 
         public class ComprehendEntity
