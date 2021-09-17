@@ -14,6 +14,8 @@ namespace Fiap.GrupoG.Jobs.Twitter
         [JsonPropertyName("data")]
         public IEnumerable<TweetSearchItem> Data { get; set; }
 
+        public virtual UserEntity User { get; set; }
+
         public class TweetSearchItem
         {
             [JsonPropertyName("id")]
@@ -21,19 +23,6 @@ namespace Fiap.GrupoG.Jobs.Twitter
 
             [JsonPropertyName("text")]
             public string Text { get; set; }
-
-            public TweetEnriry ConverterParaTabela(UserEntity userEntity)
-            {
-                return new TweetEnriry
-                {
-                    User = new TweetEnriry.UserEntity
-                    {
-                        UserId = userEntity.UserId,
-                        Name = userEntity.Name,
-                        UserName = userEntity.UserName
-                    }
-                };
-            }
         }
     }
 }

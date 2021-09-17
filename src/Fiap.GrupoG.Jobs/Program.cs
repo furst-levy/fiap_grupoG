@@ -1,3 +1,4 @@
+using Amazon.Runtime;
 using Fiap.GrupoG.Jobs.AwsComprehend;
 using Fiap.GrupoG.Jobs.Twitter;
 using Fiap.GrupoG.Mongo.Interfaces;
@@ -23,8 +24,16 @@ namespace Fiap.GrupoG.Jobs
                 .ConfigureAppConfiguration((hostContext, configApp) => { BuildJsonConfig(configApp); })
                 .ConfigureServices((hostContext, services) =>
                 {
+                    var awsOptions = hostContext.Configuration.GetAWSOptions();
+                    awsOptions.Credentials = new BasicAWSCredentials(Configuration["AWS:Access_Key"],
+                        Configuration["AWS:Secret_Access_Key"]);
+
+                    services.AddSingleton(awsOptions.Credentials);
+                    services.AddDefaultAWSOptions(awsOptions);
+
                     services.AddSingleton(Configuration);
                     services.AddSingleton<ITweetRepository, TweetRepository>();
+                    services.AddSingleton<IUserRepository, UserRepository>();
                     services.AddSingleton<IAwsComprehendServices, AwsComprehendServices>();
 
                     services.AddHttpClient<ITwitterService, TwitterService>(c =>
