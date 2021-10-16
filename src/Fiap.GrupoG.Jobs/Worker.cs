@@ -5,9 +5,11 @@ using Fiap.GrupoG.Mongo.Interfaces;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace Fiap.GrupoG.Jobs
 {
@@ -18,15 +20,17 @@ namespace Fiap.GrupoG.Jobs
         private readonly IAwsComprehendServices _awsComprehendServices;
         private readonly ITweetRepository _tweetRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IConfigurationRoot _configurationRoot;
 
         public Worker(ILogger<Worker> logger, IAwsComprehendServices awsComprehendServices,
-            ITwitterService twitterService, ITweetRepository tweetRepository, IUserRepository userRepository)
+            ITwitterService twitterService, ITweetRepository tweetRepository, IUserRepository userRepository, IConfigurationRoot configurationRoot)
         {
             _logger = logger;
             _awsComprehendServices = awsComprehendServices;
             _twitterService = twitterService;
             _tweetRepository = tweetRepository;
             _userRepository = userRepository;
+            _configurationRoot = configurationRoot;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -35,7 +39,7 @@ namespace Fiap.GrupoG.Jobs
             {
                 try
                 {
-                    var users = await _userRepository.ListUsersAsync();
+                    var users = ListUsers();
                     if (users == null || !users.Any())
                         continue;
 
@@ -55,6 +59,7 @@ namespace Fiap.GrupoG.Jobs
                                 {
                                     TweetId = item.Id,
                                     Text = item.Text,
+                                    CreatedAt = item.CreatedAt,
                                     User = new TweetEnriry.UserEntity
                                     {
                                         UserId = tweetSearch.User.UserId,
@@ -66,7 +71,7 @@ namespace Fiap.GrupoG.Jobs
 
                                 detectEntities.Entities.ForEach(x =>
                                 {
-                                    tweetEnriry.Comprehend.DetectEntities.ToList().Add(
+                                    tweetEnriry.Comprehend.DetectEntities.Add(
                                         new TweetEnriry.ComprehendEntity.DetectEntitiesDb
                                         {
                                             Text = x.Text,
@@ -77,7 +82,7 @@ namespace Fiap.GrupoG.Jobs
 
                                 detectKeyPhrases.KeyPhrases.ForEach(x =>
                                 {
-                                    tweetEnriry.Comprehend.DetectKeyPhrases.ToList().Add(
+                                    tweetEnriry.Comprehend.DetectKeyPhrases.Add(
                                         new TweetEnriry.ComprehendEntity.DetectKeyPhrasesDb
                                         {
                                             Text = x.Text,
@@ -110,9 +115,14 @@ namespace Fiap.GrupoG.Jobs
                 finally
                 {
                     _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                    await Task.Delay(60000, stoppingToken);
+                    await Task.Delay(TimeSpan.FromDays(1), stoppingToken);
                 }
             }
+        }
+
+        public IEnumerable<UserEntity> ListUsers()
+        {
+            return _configurationRoot.GetSection("twitterUsers").Get<IEnumerable<UserEntity>>();
         }
     }
 }

@@ -9,14 +9,14 @@ services:
     ports: 
       - "27017:27017"
 
-  # grupog-job:
-  #   build: 
-  #     context: .
-  #     dockerfile: ./src/HubFintech.Cashback.Merchant.Register.Api/Dockerfile
-  #   depends_on:
-  #     - mongo
-  #   networks: 
-  #     - grupog-network
+  grupog-job:
+    build: 
+      context: .
+      dockerfile: ./src/Fiap.GrupoG.Jobs/Dockerfile
+    depends_on:
+      - mongo
+    networks: 
+      - grupog-network
 
 networks: 
   grupog-network:

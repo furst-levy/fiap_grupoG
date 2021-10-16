@@ -1,4 +1,5 @@
-﻿using Fiap.GrupoG.Mongo.Entities;
+﻿using System;
+using Fiap.GrupoG.Mongo.Entities;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
@@ -23,6 +24,9 @@ namespace Fiap.GrupoG.Jobs.Twitter
 
             [JsonPropertyName("text")]
             public string Text { get; set; }
+
+            [JsonPropertyName("created_at")]
+            public DateTime CreatedAt { get; set; }
         }
     }
 }

@@ -27,9 +27,6 @@ namespace Fiap.GrupoG.Jobs.AwsComprehend
             };
 
             var detectEntitiesResponse = await comprehendClient.DetectEntitiesAsync(detectEntitiesRequest);
-            foreach (var entity in detectEntitiesResponse.Entities)
-                Console.WriteLine("Text: {0}, Type: {1}, Score: {2}", entity.Text, entity.Type, entity.Score);
-
             return detectEntitiesResponse;
         }
 
@@ -44,9 +41,6 @@ namespace Fiap.GrupoG.Jobs.AwsComprehend
                 LanguageCode = "pt"
             };
             var detectKeyPhrasesResponse = await comprehendClient.DetectKeyPhrasesAsync(detectKeyPhrasesRequest);
-            foreach (var entity in detectKeyPhrasesResponse.KeyPhrases)
-                Console.WriteLine("Text: {0}, Score: {1}", entity.Text, entity.Score);
-
             return detectKeyPhrasesResponse;
         }
 
@@ -61,12 +55,6 @@ namespace Fiap.GrupoG.Jobs.AwsComprehend
                 LanguageCode = "pt"
             };
             var detectSentimentResponse = await comprehendClient.DetectSentimentAsync(dDetectSentimentRequest);
-            Console.WriteLine(
-                "Sentiment: {0}, Score Mixed: {1}, Score Neutral: {2}, Score Positive: {3}, Score Negative: {4}"
-                , detectSentimentResponse.Sentiment.Value, detectSentimentResponse.SentimentScore.Mixed
-                , detectSentimentResponse.SentimentScore.Neutral, detectSentimentResponse.SentimentScore.Positive,
-                detectSentimentResponse.SentimentScore.Negative);
-
             return detectSentimentResponse;
         }
     }

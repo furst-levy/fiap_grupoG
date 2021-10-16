@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 
 namespace Fiap.GrupoG.Mongo.Entities
@@ -10,7 +11,7 @@ namespace Fiap.GrupoG.Mongo.Entities
         [BsonId] [BsonElement("_id")] public ObjectId Id { get; set; }
         [BsonElement("tweetId")] public string TweetId { get; set; }
         [BsonElement("text")] public string Text { get; set; }
-        [BsonElement("date")] public string Date { get; set; }
+        [BsonElement("created_at")] public DateTime CreatedAt { get; set; }
         [BsonElement("user")] public UserEntity User { get; set; }
         [BsonElement("comprehend")] public ComprehendEntity Comprehend { get; set; }
 
@@ -30,8 +31,8 @@ namespace Fiap.GrupoG.Mongo.Entities
                 DetectSentiment = new DetectSentimentDb();
             }
 
-            [BsonElement("detectEntities")] public IEnumerable<DetectEntitiesDb> DetectEntities { get; set; }
-            [BsonElement("detectKeyPhrases")] public IEnumerable<DetectKeyPhrasesDb> DetectKeyPhrases { get; set; }
+            [BsonElement("detectEntities")] public List<DetectEntitiesDb> DetectEntities { get; set; }
+            [BsonElement("detectKeyPhrases")] public List<DetectKeyPhrasesDb> DetectKeyPhrases { get; set; }
             [BsonElement("detectSentimentDb")] public DetectSentimentDb DetectSentiment { get; set; }
 
             public class DetectEntitiesDb
