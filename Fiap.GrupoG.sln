@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fiap.GrupoG", "Fiap.GrupoG\Fiap.GrupoG.csproj", "{2D5169AB-A667-4A77-9A0A-72F4608F89D6}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fiap.GrupoG.Mongo", "src\Fiap.GrupoG.Mongo\Fiap.GrupoG.Mongo.csproj", "{6AAC52C7-BC20-4208-951F-00B228C30073}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fiap.GrupoG.Jobs", "src\Fiap.GrupoG.Jobs\Fiap.GrupoG.Jobs.csproj", "{38C06508-B4EC-493E-9384-929ACD503505}"
