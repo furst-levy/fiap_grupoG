@@ -1,5 +1,6 @@
 ﻿using Fiap.GrupoG.Mongo.Entities;
 using System;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
@@ -50,6 +51,26 @@ namespace Fiap.GrupoG.Jobs.Twitter
             {
                 Console.WriteLine(ex);
                 return null;
+            }
+        }
+
+        public async Task BuscarTweetStreamAsync()
+        {
+
+            using var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer",
+                    "AAAAAAAAAAAAAAAAAAAAANYDOwEAAAAAKYN%2Bgy%2FP0CBhknbDJS1IMz%2BdLMo%3DoTATLs5ygEwQaV93iE3VPFnviB4wN5WMaWgy3LjiLnB5QEJqwH");
+            httpClient.Timeout = TimeSpan.FromMilliseconds(Timeout.Infinite);
+            var requestUri = "https://api.twitter.com/2/tweets/search/stream?tweet.fields=created_at&expansions=author_id&user.fields=created_at";
+            var stream = await httpClient.GetStreamAsync(requestUri);
+
+            using var reader = new StreamReader(stream);
+            while (!reader.EndOfStream)
+            {
+                var currentLine = reader.ReadLine();
+                if (!string.IsNullOrEmpty(currentLine))
+                    Console.WriteLine(currentLine);
             }
         }
     }

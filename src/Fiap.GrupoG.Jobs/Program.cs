@@ -42,7 +42,7 @@ namespace Fiap.GrupoG.Jobs
                         c.DefaultRequestHeaders.Add("Accept", "application/json");
                     });
 
-                    services.AddHostedService<Worker>();
+                    services.AddHostedService<StreamWorker>();
                 });
 
         private static void BuildJsonConfig(IConfigurationBuilder configApp)

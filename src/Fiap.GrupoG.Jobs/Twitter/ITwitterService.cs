@@ -7,5 +7,6 @@ namespace Fiap.GrupoG.Jobs.Twitter
     public interface ITwitterService
     {
         Task<TweetSearchDto> BuscarTweetAsync(CancellationToken stoppingToken, UserEntity user);
+        Task BuscarTweetStreamAsync();
     }
 }
