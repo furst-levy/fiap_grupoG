@@ -2,6 +2,7 @@ using Fiap.GrupoG.Jobs.AwsComprehend;
 using Fiap.GrupoG.Jobs.Twitter;
 using Fiap.GrupoG.Mongo.Entities;
 using Fiap.GrupoG.Mongo.Interfaces;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
@@ -9,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 
 namespace Fiap.GrupoG.Jobs
 {
