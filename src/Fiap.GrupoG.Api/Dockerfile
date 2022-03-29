@@ -4,7 +4,7 @@ EXPOSE 80
 
 COPY . /build
 RUN dotnet restore
-RUN dotnet publish src/Fiap.GrupoG.Jobs/Fiap.GrupoG.Api.csproj -c RELEASE --self-contained  -r linux-x64 -o src/out
+RUN dotnet publish src/Fiap.GrupoG.Api/Fiap.GrupoG.Api.csproj -c RELEASE --self-contained  -r linux-x64 -o src/out
 
 # build runtime image
 FROM mcr.microsoft.com/dotnet/runtime:5.0
