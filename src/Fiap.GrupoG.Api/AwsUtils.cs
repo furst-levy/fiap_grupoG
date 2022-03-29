@@ -14,8 +14,8 @@ namespace Fiap.GrupoG.Api
         {
             //https://stackoverflow.com/questions/70333681/for-an-amazon-s3-bucket-deplolyent-from-guithub-how-do-i-fix-the-error-accesscon
             //deixar como s3 publico
-            using var client = new AmazonS3Client(Environment.GetEnvironmentVariable("AKIA4E42PRG7MHCC3MCD"),
-                Environment.GetEnvironmentVariable("C4cjE4VpuSFrZSt3aUJ+TqZQxEx8166zDfjCggB7"), RegionEndpoint.USEast1);
+            using var client = new AmazonS3Client(Environment.GetEnvironmentVariable("AWS_KEY"),
+                Environment.GetEnvironmentVariable("AWS_SECRET"), RegionEndpoint.USEast1);
             await using var newMemoryStream = new MemoryStream();
             file.CopyTo(newMemoryStream);
 
